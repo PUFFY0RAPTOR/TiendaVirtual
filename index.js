@@ -9,6 +9,7 @@ app.listen(conex = process.env.PORT || 3060, () =>{
     console.log('Ejecutando Tienda virtual');
 });
 
+//Generando ruta base de la landing page
 app.get("/", (req, res)=>{
     res.render('pages/tiendaVirtual');
 })
