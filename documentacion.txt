@@ -1,7 +1,6 @@
 Creamos la estructura de la carpeta
 Descargamos lo paquetes para el proyecto
 <<<<<<< HEAD
-hola chicos 
 =======
 sjdfhbsudjgfmkldf
 >>>>>>> d7ee95149201109cf9cc8b1f06254952ea995f8c
