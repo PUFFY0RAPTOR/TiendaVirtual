@@ -6,11 +6,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
 app.listen(conex = process.env.PORT || 3060, () =>{
-    console.log('Ejecutando Tienda virtual');
+    console.log(`Ejecutando Tienda virtual en el puerto: ${conex}`);
 });
 
 //Generando ruta base de la landing page
 app.get("/", (req, res)=>{
     res.render('pages/makeup');
 })
+
+//Demás url
 
