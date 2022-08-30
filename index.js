@@ -11,6 +11,6 @@ app.listen(conex = process.env.PORT || 3060, () =>{
 
 //Generando ruta base de la landing page
 app.get("/", (req, res)=>{
-    res.render('pages/tiendaVirtual');
+    res.render('pages/makeup');
 })
 
