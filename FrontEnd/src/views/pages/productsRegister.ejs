@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de productos</title>
+</head>
+<body>
+
+    <header>
+        <%- include('../partials/navbar'); %>
+    </header>
+
+
+    <br/><div class="container text-center">
+        
+        <h1>Registro de productos</h1><br/>
+
+        <form action="#" method="post">
+
+            <div class="form-group">
+                <label for="ref">Referencia: </label>
+                <input class="form-control" type="number" name="ref" placeholder="Referencia"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="ref">Nombre: </label>
+                <input class="form-control" type="text" name="nombre" placeholder="Nombre"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="ref">Precio: </label>
+                <input class="form-control" type="number" name="precio" placeholder="$ Precio"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="ref">Stock: </label>
+                <input class="form-control" type="number" name="stock" placeholder="Stock"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="ref">Imagen: </label>
+                <input class="form-control" type="file" name="imagen" placeholder="Imagen"><br/><br/>
+            </div>
+
+            <label for="estadoHab">Habilitado</label>
+            <input type="radio" name="estadoHab" value="Habilitado" checked><br/>
+
+            <label for="estadoDes">Deshabilitado</label>
+            <input type="radio" name="estadoDes" value="Deshabilitado"><br/><br/>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+        </form>
+    </div><br/>
+
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+    
+</body>
+</html>

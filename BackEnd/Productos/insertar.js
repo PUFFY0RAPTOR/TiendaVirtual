@@ -8,15 +8,16 @@ const client = new MongoCli(uri);
 async function run() {
   try {
     const database = client.db("TiendaVirtual");
-    const ventas = database.collection("Ventas");
+    const productos = database.collection("Productos");
     const doc = {
-      producto: "Delineador de ojos nailen negro x 4gr",
-      subtotal: 8854,
-      total: 10054,
-      cliente: "Emiliano",
-      vendedor: "Valeria Bustamante",
+      referencia: "123456",
+      nombre: "Delineador de ojos nailen negro x 4gr",
+      precio: 10054,
+      stock: 100,
+      imagen: null,
+      estado: "habilitado",
     }
-    const result = await ventas.insertOne(doc);
+    const result = await productos.insertOne(doc);
 
     console.log(`Producto ingresado con el _id: ${result.insertedId}`);
   } finally {
