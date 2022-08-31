@@ -1,5 +1,5 @@
 const MongoCli = require("mongodb").MongoClient;
-
+//Vale te falta el zoom
 const uri = "mongodb+srv://ValeriaBustamante:w3WhljMYIRa5jadU@clusteradsi2364481.1di43ez.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoCli(uri);

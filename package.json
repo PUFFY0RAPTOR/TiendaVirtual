@@ -4,8 +4,8 @@
   "description": "Proyecto Node",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/PUFFY0RAPTOR/TiendaVirtual#readme",
   "dependencies": {
-    "axios": "^0.27.2",
     "bootstrap": "4.2",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
@@ -26,6 +25,7 @@
     "mongoose": "^6.5.2"
   },
   "devDependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.19"
   }
 }
