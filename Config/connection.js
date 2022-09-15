@@ -1,11 +1,6 @@
-//Conexión con la base de datos
-//Importar mongoose
-//Definir const URI
-//Def variable para la BD otra para la conexión
-
 const mongoose = require('mongoose');
 
-const uri = 'mongodb+srv://ValeriaBustamante:w3WhljMYIRa5jadU@clusteradsi2364481.1di43ez.mongodb.net/test';
+const uri = 'mongodb+srv://SebastianPertuz:123456sebas@clusteradsi2364481.uulort2.mongodb.net/TiendaVirtual?retryWrites=true&w=majority';
 
 const connectionParams={
     useNewUrlParser: true,
@@ -16,9 +11,7 @@ mongoose.connect(uri, connectionParams)
         console.log('Conectado a la base de datos')
     })
     .catch((err)=>{
-        console.log(`Error en la conexión ${err}`);
+        console.log(`Error en la conexión --- ${err}`);
     })
     
-module.exports={
-    mongoose
-}
+module.exports= mongoose;

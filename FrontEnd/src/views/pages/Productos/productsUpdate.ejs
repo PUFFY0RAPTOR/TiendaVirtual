@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de productos</title>
+    <title>Editar producto</title>
 </head>
 <body>
 
@@ -12,43 +12,43 @@
 
     <br/><div class="container text-center">
         
-        <h1>Registro de productos</h1><br/>
+        <h1>Editar producto <strong><%= datos.Nombre %></strong></h1><br/>
 
-        <form action="/registerProd" method="post">
+        <form action="/updateProd/<%= datos._id %>" method="post">
 
             <div class="form-group">
                 <label for="Referencia">Referencia: </label>
-                <input class="form-control" type="text" name="Referencia" placeholder="Referencia"><br/><br/>
+                <input class="form-control" type="text" name="referencia" value="<%= datos.Referencia %>" placeholder="Referencia"><br/><br/>
             </div>
 
             <div class="form-group">
                 <label for="Nombre">Nombre: </label>
-                <input class="form-control" type="text" name="Nombre" placeholder="Nombre"><br/><br/>
+                <input class="form-control" type="text" name="nombre" value="<%= datos.Nombre %>" placeholder="Nombre"><br/><br/>
             </div>
             
             <div class="form-group">
                 <label for="Descripcion">Descripcion</label><br>
-                <textarea name="Descripcion" id="Descripcion" cols="30" rows="10" placeholder="Descripcion..."></textarea><br/><br/>
+                <textarea name="descripcion" value="<%= datos.Descripcion %>" cols="30" rows="10" placeholder="Descripcion..."><%= datos.Descripcion %></textarea><br/><br/>
             </div>
 
             <div class="form-group">
                 <label for="Precio">Precio: </label>
-                <input class="form-control" type="number" name="Precio" placeholder="$ Precio"><br/><br/>
+                <input class="form-control" type="number" name="precio" value="<%= datos.Precio %>" placeholder="$ Precio"><br/><br/>
             </div>
 
             <div class="form-group">
                 <label for="Stock">Stock: </label>
-                <input class="form-control" type="number" name="Stock" placeholder="Stock"><br/><br/>
+                <input class="form-control" type="number" name="stock" value="<%= datos.Stock %>" placeholder="Stock"><br/><br/>
             </div>
 
             <div class="form-group">
                 <label for="Imagen">Imagen: </label>
-                <input class="form-control" type="text" name="Imagen" placeholder="Imagen"><br/><br/>
+                <input class="form-control" type="text" name="imagen" value="<%= datos.Imagen %>" placeholder="Imagen"><br/><br/>
             </div>
 
             <div class="form-group">
                 <label for="Habilitado">Habilitado: </label>
-                <input class="form-control" type="text" name="Habilitado" placeholder="True o False"><br/><br/>
+                <input class="form-control" type="text" name="habilitado" value="<%= datos.Habilitado %>" placeholder="True o False"><br/><br/>
             </div>
 
             <!-- <label for="estadoHab">Habilitado</label>
