@@ -19,12 +19,7 @@
                     <img class="img-fluid mx-auto d-block rounded"
                         src="https://thumbs.dreamstime.com/b/wallpaper-para-el-maquillaje-profesional-y-forme-los-cepillos-pigmentos-coloridos-103953722.jpg" /><br/>
                     
-                    <form>
-                        <span id="usuario" hidden>
-                            <% users.forEach((i) => { %>
-                                <%= i.Nombre %>
-                            <% }); %>
-                        </span>
+                    <form action="/login">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input id="nombre" name="nombre"
@@ -37,7 +32,7 @@
                                 class="form-control" type="password"
                                 placeholder="Contraseña">
                         </div>
-                        <button type="submit" onclick="autentication()" class="btn btn-primary mb-2">
+                        <button type="submit" class="btn btn-primary mb-2">
                             Entrar
                         </button>
                         <br>

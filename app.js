@@ -5,7 +5,7 @@ const enrutador = require('./Routes/enrutador');
 const dbm = require('./Config/connection');
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'FrontEnd/src/views')); //Join es unir o juntar
+app.set('views', path.join(__dirname, 'FrontEnd/src/views')); //Join es unir, ruta absoluta, deme el directorio base del proyecto y lo une con las vistas
 
 app.use(express.static('FrontEnd/src/views/static/'));
 

@@ -33,7 +33,7 @@ router.get('/login', async (req, res) => {
 
 //Ruta de los productos
 router.get("/productos", (req, res) =>{
-    res.render('pages/Productos/products');
+    res.render('pages/Productos/products', {rol: false});
 });
 
 router.get("/prodRegistros", (req, res) =>{
