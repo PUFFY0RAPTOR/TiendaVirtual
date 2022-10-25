@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <main role="main" class="container my-auto">
+            <div class="row">
+                <div id="login" class="col-lg-4 offset-lg-4 col-md-6 offset-md-3
+                    col-12">
+                    <h2 class="text-center">Bienvenido a MakeUp-Shop Utopic</h2>
+                    <img class="img-fluid mx-auto d-block rounded"
+                        src="https://thumbs.dreamstime.com/b/wallpaper-para-el-maquillaje-profesional-y-forme-los-cepillos-pigmentos-coloridos-103953722.jpg" /><br/>
+                    
+                    <form>
+                        <span id="usuario" hidden>
+                            <% users.forEach((i) => { %>
+                                <%= i.Nombre %>
+                            <% }); %>
+                        </span>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input id="nombre" name="nombre"
+                                class="form-control" type="text"
+                                placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="passw">Contraseña</label>
+                            <input id="passw" name="passw"
+                                class="form-control" type="password"
+                                placeholder="Contraseña">
+                        </div>
+                        <button type="submit" onclick="autentication()" class="btn btn-primary mb-2">
+                            Entrar
+                        </button>
+                        <br>
+                        <a href="#">Contraseña olvidada</a>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <br/>
+
+<script src="js/main.js"></script>
+</body>
+</html>

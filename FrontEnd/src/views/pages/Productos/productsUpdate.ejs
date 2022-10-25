@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar producto</title>
+</head>
+<body>
+
+    <%- include('../../partials/navbar'); %>    
+
+    <br/><div class="container text-center">
+        
+        <h1>Editar producto <strong><%= datos.Nombre %></strong></h1><br/>
+
+        <form action="/updateProd/<%= datos._id %>" method="post">
+
+            <div class="form-group">
+                <label for="Referencia">Referencia: </label>
+                <input class="form-control" type="text" name="referencia" value="<%= datos.Referencia %>" placeholder="Referencia"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Nombre">Nombre: </label>
+                <input class="form-control" type="text" name="nombre" value="<%= datos.Nombre %>" placeholder="Nombre"><br/><br/>
+            </div>
+            
+            <div class="form-group">
+                <label for="Descripcion">Descripcion</label><br>
+                <textarea name="descripcion" value="<%= datos.Descripcion %>" cols="30" rows="10" placeholder="Descripcion..."><%= datos.Descripcion %></textarea><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Precio">Precio: </label>
+                <input class="form-control" type="number" name="precio" value="<%= datos.Precio %>" placeholder="$ Precio"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Stock">Stock: </label>
+                <input class="form-control" type="number" name="stock" value="<%= datos.Stock %>" placeholder="Stock"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Imagen">Imagen: </label>
+                <input class="form-control" type="text" name="imagen" value="<%= datos.Imagen %>" placeholder="Imagen"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Habilitado">Habilitado: </label>
+                <input class="form-control" type="text" name="habilitado" value="<%= datos.Habilitado %>" placeholder="True o False"><br/><br/>
+            </div>
+
+            <!-- <label for="estadoHab">Habilitado</label>
+            <input type="radio" name="estadoHab" value="Habilitado" checked><br/>
+
+            <label for="estadoDes">Deshabilitado</label>
+            <input type="radio" name="estadoDes" value="Deshabilitado"><br/><br/> -->
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+        </form>
+    </div><br/>
+
+    <%- include('../../partials/footer'); %>
+    
+</body>
+</html>

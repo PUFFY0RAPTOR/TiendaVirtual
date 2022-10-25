@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar ventas</title>
+</head>
+<body>
+
+    <%- include('../../partials/navbar'); %>    
+
+    <br/><div class="container text-center">
+        
+        <h1>Actualizar venta</h1><br/>
+
+        <form action="/updateV/<%= datosV._id %>" method="post">
+
+            <div class="form-group">
+                <label for="Productos">Productos: </label>
+                <input class="form-control" type="text" name="productosV" value="<%= datosV.ProductosV %>" placeholder="Productos"><br/><br/>
+            </div>
+            
+            <div class="form-group">
+                <label for="Subtotal">Subtotal: </label>
+                <input class="form-control" type="number" name="subtotal" value="<%= datosV.Subtotal %>" placeholder="Subtotal venta"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="FechaVenta">Fecha Venta: </label>
+                <input class="form-control" type="date" name="fechaVenta" value="<%= datosV.FechaVenta %>" placeholder="Fecha de la venta"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="Impuesto">Impuesto: </label>
+                <input class="form-control" type="number" name="impuesto" value="<%= datosV.Impuesto %>" placeholder="Impuesto venta"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label for="TotalVenta">Total venta: </label>
+                <input class="form-control" type="number" name="totalVenta" value="<%= datosV.TotalVenta %>" placeholder="Total de la venta"><br/><br/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+        </form>
+    </div><br/>
+
+    <%- include('../../partials/footer'); %>
+    
+</body>
+</html>
