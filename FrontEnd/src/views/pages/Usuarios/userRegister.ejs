@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regsitro de usuario</title>
+</head>
+<body>
+
+    <%- include('../../partials/navbar'); %>    
+
+    <br/><div class="container text-center mt-5 p-4">
+        
+        <h1>Registro de usuarios</h1><br/>
+
+        <form action="/registerUsuarios" method="post">
+            
+            <div class="form-group">
+                <label class="form-label" for="Correo">Correo: </label>
+                <input class="form-control" type="email" name="Correo" placeholder="Correo del usuario"><br/><br/>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="Passw">Passw: </label>
+                <input class="form-control" type="password" name="Passw" placeholder="Contraseña"><br/><br/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="User">User: </label>
+                <input class="form-control" type="text" name="User" placeholder="User del usuario"><br/><br/>
+            </div>
+
+            <% if (rol == 'Admin'){%>Correo:￼
+
+                Contraseña:￼
+                
+                Usuario:￼
+                
+                Rol:
+                <div class="form-group">
+                    <label for="roles">Rol: </label>
+                    <select class="form-control" name="Rol" id="roles">
+                        <option value="Cliente" selected>Cliente</option>
+                        <option value="Empleado">Empleado</option>
+                        <option value="Administrador">Administrador</option>
+                    </select>
+                </div>
+            <%}%>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+        </form>
+    </div><br/>
+
+    <%- include('../../partials/footer'); %>    
+
+
+
+
+    
+</body>
+</html>

@@ -19,15 +19,15 @@
                     <img class="img-fluid mx-auto d-block rounded"
                         src="https://thumbs.dreamstime.com/b/wallpaper-para-el-maquillaje-profesional-y-forme-los-cepillos-pigmentos-coloridos-103953722.jpg" /><br/>
                     
-                    <form action="/login">
+                    <form action="/login" method="post">
                         <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input id="nombre" name="nombre"
-                                class="form-control" type="text"
-                                placeholder="Nombre">
+                            <label for="correo">Correo: </label>
+                            <input id="correo" name="Correo"
+                                class="form-control" type="email"
+                                placeholder="Correo electronico">
                         </div>
                         <div class="form-group">
-                            <label for="passw">Contraseña</label>
+                            <label for="passw">Contraseña: </label>
                             <input id="passw" name="passw"
                                 class="form-control" type="password"
                                 placeholder="Contraseña">
@@ -35,6 +35,7 @@
                         <button type="submit" class="btn btn-primary mb-2">
                             Entrar
                         </button>
+                        <a class="btn btn-warning" href="/inicio">Volver</a>
                         <br>
                         <a href="#">Contraseña olvidada</a>
                     </form>

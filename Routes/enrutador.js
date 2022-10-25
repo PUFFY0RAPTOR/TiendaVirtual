@@ -5,7 +5,11 @@ const Productos = require('../Models/modelsProd');
 const Clientes = require('../Models/modelsClients');
 const Ventas = require('../Models/modelsVenta');
 const Usuario = require('../Models/modelsUsuario');
-const Usuarios = require('../Models/modelsUsuario');
+const Vendedores = require('../Models/modelVendedores');
+const multer = require('multer');
+const { default: mongoose } = require('mongoose');
+
+
 
 //Generando ruta base de la landing page
 router.get('/landing', (req, res)=>{
@@ -17,27 +21,68 @@ router.get('/inicio', (req, res)=>{
 });
 
 
-router.get('/login', async (req, res) => {
+/*______________________________________________________________
+  Login */
+router.get('/loginForm', (req, res)=>{
+    res.render('pages/login');
+});
+
+router.post('/login', async (req, res) => {
     const autenticacion = await Usuario.findOne({Correo:req.body.Correo})
-    if (autenticacion){
+    if (autenticacion == null){
+        console.log("No llegó nada");
+    }else{
         res.render("pages/index", {
             "correo":autenticacion.Correo,
             "rol":autenticacion.Rol, 
             "usuario":autenticacion.Usuario
         });
-    }else{
-        console.log("No llegó nada")
     }
 });
+/* _____________________________________________________________
+    Registro usuario*/
+/* router.get('/registerUsuariosForm', (req, res)=>{
+    Clientes.find({}, (err, clientes)=>{
+        if (err) {
+            console.error('Error: '+ err);
+        } else{
+            res.render('pages/Usuarios/userRegister', {rol:false, objClient:clientes});
+        }
+    });
+});
 
+router.post('/registerUsuarios', (req, res)=>{
+    const newUsuario = new Usuario({
+        Correo: req.body.Correo, 
+        Contrasena: req.body.Passw, 
+        Usuario: req.body.User, 
+        Rol: req.body.Rol, 
+    })
 
-//Ruta de los productos
+    newUsuario.save();
+    console.log('Usuario guardado correctamente');
+    res.redirect('/inicio');
+}); */
+
+/* ____________________________________________________________
+   Productos */
 router.get("/productos", (req, res) =>{
     res.render('pages/Productos/products', {rol: false});
 });
 
 router.get("/prodRegistros", (req, res) =>{
     res.render('pages/Productos/productsRegister');
+});
+
+const storage = multer.diskStorage({
+    destination: 'FrontEnd/static/uploads/',
+    filename: function(req, file, cb){
+        cb(null, + Date.now() + file.originalname);
+    }
+});
+
+const upload = multer({
+    storage: storage
 });
 
 router.post("/registerProd", (req, res) => {
@@ -110,8 +155,8 @@ router.post('/updateProd/:_id', (req, res) => {
         } );
 });
 
-
-//CRUD clientes
+/* ____________________________________________________________
+   Clientes  */
 
 router.get("/clientesRegistros", (req, res) =>{
     res.render('pages/Clientes/clientRegister', {rol:false});
@@ -126,14 +171,26 @@ router.post("/registerClientes", (req, res) => {
         HistorialCompras: req.body.Historial, 
     });
 
+    newCliente.save();
+
+    const cliente = new Clientes();
+    cliente.Cliente = new mongoose.Types.ObjectId();
+
+    typeof cliente.Cliente;
+    cliente.Cliente instanceof mongoose.Types.ObjectId;
+    console.log(cliente.Cliente.toString());
+
+    const idCliente = cliente.Cliente.toString();
+
+
     const newUsuario = new Usuario({
         Correo: req.body.Correo,
         Contrasena: req.body.Passw,
         Usuario: req.body.User,
         Rol: req.body.Rol,
+        Cliente: idCliente
     });
 
-    newCliente.save();
     newUsuario.save();
     console.log('Cliente guardado');
     res.redirect('/listarClientes');
@@ -145,8 +202,6 @@ router.get("/listarClientesPrueba", (req, res) =>{
             res.status(200).send(clientes);
         });
     }) */
-
-
     Clientes.find({}).populate('Usuarios').
     exec((err, clientes) => { 
         if (err) {
@@ -163,9 +218,12 @@ router.get("/listarClientes", (req, res) =>{
         if(err){
             console.error('Ha ocurrido un error con los clientes');
         }else{
-            res.render('pages/Clientes/clientList', {datosC: clientes, rol: false});     
+            //let usuarios = Usuario.findOne({Cliente: clientes.ObjectId});
+            //console.log("Esto es lo que trajo: ", ObjectId());
+            res.render('pages/Clientes/clientList', {datosC: clientes, datosU:object, rol: false});     
         }
     });
+    console.log("Esto es lo que trajo abajo: ", ObjectId());
 });
 
 router.post('/deleteCliente/:_id', (req, res) =>{
@@ -209,7 +267,8 @@ router.post('/updateCliente/:_id', (req, res) => {
         } );
 });
 
-//CRUD ventas
+/* _____________________________________________________________
+   Ventas  */
 
 router.get('/listVentas', (req, res) => {
     
@@ -280,8 +339,70 @@ router.post('/updateV/:_id', (req, res) => {
             }
         } );
 });
+/* ____________________________________________________________
+   Vendedores  */
 
+router.get("/vendedores", (req, res) =>{
+    Vendedores.find({}, (err, vendedores) =>{
+        if(err){
+            console.error('Ha ocurrido un error');
+        }else{
+            res.render('pages/Vendedores/vendedoresList', {datos: vendedores});
+        }
+    });
+});
 
+router.get("/vendRegistros", (req, res) =>{
+    res.render('pages/Vendedores/vendedoresRegister');
+});
+
+router.post("/registerVend", (req, res) => {
+    const newVendedor = new Vendedores({
+        Nombre: req.body.Nombre,
+        Documento: req.body.Documento
+    });
+    newVendedor.save();
+    console.log('Vendedor registrado');
+    res.redirect('/vendedores');
+});
+
+router.post('/deleteVend/:Documento', (req, res) => {
+    Vendedores.deleteOne({Documento: req.params.Documento}, (error) => {
+        if(error){
+            res.send('Error al intentar borrar este vendedor');
+        }else{
+            console.log('Vendedor eliminado');
+            res.redirect('/vendedores');
+        }
+    });
+});
+
+router.get('/actualizarVend/:Documento', (req, res) => {
+    Vendedores.findOne({Documento: req.params.Documento}, (err, vendedores) =>{
+        if(err){
+            console.error('Ha ocurrido un error');
+        }else{
+            res.render('pages/Vendedores/vendedoresUpdate', {datos: vendedores});
+        }
+    });
+});
+
+router.post('/updateVend/:Documento', (req, res) => {
+    Vendedores.updateOne({Documento: req.params.Documento},
+        {
+            $set:{
+                Nombre: req.body.Nombre,
+            }
+        }, (err, data) => {
+            if(err){
+                console.error(err);
+            }else{
+                res.redirect('/vendedores');
+            }
+        });
+});
+
+/* _____________________________________________________________ */
 router.get("/conectar", (req, res)=>{
     bdc.mongoose;
 });

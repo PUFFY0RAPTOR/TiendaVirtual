@@ -21,10 +21,7 @@
                     <th>Telefono</th>
                     <th>Dirección</th>
                     <th>Total comprado</th>
-                    <th>Correo</th>
-                    <th>Contraseña</th>
                     <th>Usuario</th>
-                    <th>Rol</th>
                     <th>Historial compras</th>
                     <th>Acciones</th>
                 </tr>
@@ -32,13 +29,13 @@
             <tbody> 
 
                 <% datosC.forEach((cliente) => { %>
-
+                    
                     <tr>
                         <td><%= cliente.Nombre %></td>
                         <td><%= cliente.Telefono %></td>
                         <td><%= cliente.Direccion %></td>
                         <td><%= cliente.TotalComprado %></td>
-                        <td><%= cliente.Usuarios[0] %></td>
+                        <td><%= datosU %></td>
                         <td><%= cliente.HistorialCompras %></td>
                         <td>
                             <a href="/actualizarCliente/<%= cliente._id %>" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
