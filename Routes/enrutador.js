@@ -6,18 +6,26 @@ const Clientes = require('../Models/modelsClients');
 const Ventas = require('../Models/modelsVenta');
 const Usuario = require('../Models/modelsUsuario');
 const Vendedores = require('../Models/modelVendedores');
+const cookie = require('cookie-parser');
 const multer = require('multer');
 const { default: mongoose } = require('mongoose');
 
-
+//Creando variable cookie
+router.use(cookie());
 
 //Generando ruta base de la landing page
 router.get('/landing', (req, res)=>{
     res.render('pages/makeup');
 });
 
+
 router.get('/inicio', (req, res)=>{
-    res.render('pages/index', {rol:false});
+    const autenticacion = Usuario.findOne({Correo:req.body.Correo})
+    res.render('pages/index', {
+        "correo":autenticacion.Correo,
+        "rol":autenticacion.Rol, 
+        "usuario":autenticacion.Usuario
+    });
 });
 
 
@@ -28,27 +36,22 @@ router.get('/loginForm', (req, res)=>{
 });
 
 router.post('/login', async (req, res) => {
-    const autenticacion = await Usuario.findOne({Correo:req.body.Correo})
+    const autenticacion = await Usuario.findOne({Correo:req.body.Correo});
     if (autenticacion == null){
         console.log("No llegó nada");
     }else{
-        res.render("pages/index", {
+        res.render("pages/index", res.cookie("datos", {
             "correo":autenticacion.Correo,
             "rol":autenticacion.Rol, 
             "usuario":autenticacion.Usuario
-        });
+        }));
     }
+    console.log(req.cookies);
 });
 /* _____________________________________________________________
     Registro usuario*/
-/* router.get('/registerUsuariosForm', (req, res)=>{
-    Clientes.find({}, (err, clientes)=>{
-        if (err) {
-            console.error('Error: '+ err);
-        } else{
-            res.render('pages/Usuarios/userRegister', {rol:false, objClient:clientes});
-        }
-    });
+router.get('/registerUsuariosForm', (req, res)=>{
+    res.render('pages/Usuarios/userRegister', {rol:false});
 });
 
 router.post('/registerUsuarios', (req, res)=>{
@@ -57,12 +60,12 @@ router.post('/registerUsuarios', (req, res)=>{
         Contrasena: req.body.Passw, 
         Usuario: req.body.User, 
         Rol: req.body.Rol, 
-    })
+    })  
 
     newUsuario.save();
     console.log('Usuario guardado correctamente');
-    res.redirect('/inicio');
-}); */
+    res.redirect('/loginForm');
+}); 
 
 /* ____________________________________________________________
    Productos */
