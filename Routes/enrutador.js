@@ -22,17 +22,8 @@ router.get('/landing', (req, res)=>{
 
 
 router.get('/inicio', (req, res)=>{
-    res.render('pages/index', {"datos": false});
+    res.render('pages/index', req.cookies);
 });
-
-/* router.get('/index', (req, res)=>{
-    if(req.cookies.usuario){
-        res.render('pages/inicio', {usuario: req.cookies.usuario});
-    }
-    else{
-        res.render('pages/inicio', {usuario: false});
-    }
-}); */
 
 
 /*______________________________________________________________
@@ -59,7 +50,7 @@ router.post('/login', async (req, res) => {
 
 
 router.get('/logout', (req, res) => {
-    res.cookie("datos", false);
+    res.clearCookie('datos');
     res.redirect('/inicio');
     console.log('Sesión cerrada correctamente');
 });
@@ -77,11 +68,14 @@ router.post('/registerUsuarios', controllerUsuarios.registerUsuarios */
 
 /* ____________________________________________________________
    Productos */
-router.get("/productos", controllerProductos.listarProductos );
-
-router.get("/prodRegistros", (req, res) =>{
-    res.render('pages/Productos/productsRegister', req.cookies);
-});
+   
+router.get("/productos", controllerProductos.obtenerProductos());
+router.get("/prodRegistros", controllerProductos.formularioRegistroProd());
+router.post("/registerProd", controllerProductos.registroProd());
+router.get("/listarProd", controllerProductos.listarProductos());
+router.post('/delete/:Referencia', controllerProductos.eliminarProducto());
+router.get('/actualizarProd/:_id', controllerProductos.formActualizarProducto());
+router.post('/updateProd/:_id', controllerProductos.actualizarProductos());
 
 const storage = multer.diskStorage({
     destination: 'FrontEnd/static/uploads/',
@@ -89,82 +83,8 @@ const storage = multer.diskStorage({
         cb(null, + Date.now() + file.originalname);
     }
 });
-
 const upload = multer({
     storage: storage
-});
-
-router.post("/registerProd", (req, res) => {
-    const newProducts = new Productos({
-        Referencia: req.body.Referencia,
-        Nombre: req.body.Nombre,
-        Descripcion: req.body.Descripcion,
-        Precio: req.body.Precio,
-        Stock: req.body.Stock,
-        Imagen: req.body.Imagen,
-        Habilitado: req.body.Habilitado
-    });
-
-    newProducts.save();
-    console.log('Producto guardado');
-    res.redirect('/listarProd');
-});
-
-
-router.get("/listarProd", (req, res) =>{
-
-    Productos.find({}, (err, productos)=>{
-        if(err){
-            console.error('Ha ocurrido un error');
-        }else{
-            let cooki = req.cookies;
-            res.render('pages/Productos/productsList', {produc: productos, datos: cooki});
-        }
-    });
-});
-
-
-router.post('/delete/:Referencia', (req, res) =>{
-    Productos.deleteOne({Referencia: req.params.Referencia}, (error) =>{
-        if(error){
-            res.send('Error al intentar eliminar el personaje.');
-        }else{ 
-            console.log('Producto eliminado');
-            res.redirect('/listarProd');
-        }
-    });
-});
-
-router.get('/actualizarProd/:_id', (req, res) => {
-
-    Productos.findOne({_id: req.params._id}, (err, productos) =>{
-        if(err){
-            console.error('Ha ocurrido un error');
-        }else{
-            res.render('pages/Productos/productsUpdate', {datos: productos});
-        }
-    });
-});
-
-router.post('/updateProd/:_id', (req, res) => {
-    Productos.updateOne({_id: req.params._id},
-        {
-            $set:{
-                Referencia: req.body.referencia, 
-                Nombre: req.body.nombre,                
-                Descripcion: req.body.descripcion, 
-                Precio: req.body.precio, 
-                Stock: req.body.stock, 
-                Imagen: req.body.imagen, 
-                Habilitado: req.body.habilitado,
-            }
-        }, (err, data) => {
-            if(err){
-                console.error(err);
-            }else{
-                res.redirect('/listarProd');
-            }
-        } );
 });
 
 /* ____________________________________________________________
