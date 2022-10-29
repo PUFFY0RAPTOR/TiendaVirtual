@@ -9,6 +9,8 @@ const Vendedores = require('../Models/modelVendedores');
 const cookie = require('cookie-parser');
 const multer = require('multer');
 const { default: mongoose } = require('mongoose');
+const controllerUsuarios = require('../Controller/controllerUsuario');
+const controllerProductos = require('../Controller/controllerProductos');
 
 //Creando variable cookie
 router.use(cookie());
@@ -20,13 +22,17 @@ router.get('/landing', (req, res)=>{
 
 
 router.get('/inicio', (req, res)=>{
-    const autenticacion = Usuario.findOne({Correo:req.body.Correo})
-    res.render('pages/index', {
-        "correo":autenticacion.Correo,
-        "rol":autenticacion.Rol, 
-        "usuario":autenticacion.Usuario
-    });
+    res.render('pages/index', {"datos": false});
 });
+
+/* router.get('/index', (req, res)=>{
+    if(req.cookies.usuario){
+        res.render('pages/inicio', {usuario: req.cookies.usuario});
+    }
+    else{
+        res.render('pages/inicio', {usuario: false});
+    }
+}); */
 
 
 /*______________________________________________________________
@@ -35,46 +41,46 @@ router.get('/loginForm', (req, res)=>{
     res.render('pages/login');
 });
 
+
 router.post('/login', async (req, res) => {
     const autenticacion = await Usuario.findOne({Correo:req.body.Correo});
     if (autenticacion == null){
         console.log("No llegó nada");
     }else{
-        res.render("pages/index", res.cookie("datos", {
+        res.cookie("datos", {
             "correo":autenticacion.Correo,
             "rol":autenticacion.Rol, 
             "usuario":autenticacion.Usuario
-        }));
+        });
+        res.render('pages/index', req.cookies);
     }
-    console.log(req.cookies);
+    //console.log(req.cookies);
 });
+
+
+router.get('/logout', (req, res) => {
+    res.cookie("datos", false);
+    res.redirect('/inicio');
+    console.log('Sesión cerrada correctamente');
+});
+
+
 /* _____________________________________________________________
     Registro usuario*/
-router.get('/registerUsuariosForm', (req, res)=>{
+/* router.get('/registerUsuariosForm', (req, res)=>{
     res.render('pages/Usuarios/userRegister', {rol:false});
 });
 
-router.post('/registerUsuarios', (req, res)=>{
-    const newUsuario = new Usuario({
-        Correo: req.body.Correo, 
-        Contrasena: req.body.Passw, 
-        Usuario: req.body.User, 
-        Rol: req.body.Rol, 
-    })  
+router.post('/registerUsuarios', controllerUsuarios.registerUsuarios */
 
-    newUsuario.save();
-    console.log('Usuario guardado correctamente');
-    res.redirect('/loginForm');
-}); 
+
 
 /* ____________________________________________________________
    Productos */
-router.get("/productos", (req, res) =>{
-    res.render('pages/Productos/products', {rol: false});
-});
+router.get("/productos", controllerProductos.listarProductos );
 
 router.get("/prodRegistros", (req, res) =>{
-    res.render('pages/Productos/productsRegister');
+    res.render('pages/Productos/productsRegister', req.cookies);
 });
 
 const storage = multer.diskStorage({
@@ -104,16 +110,19 @@ router.post("/registerProd", (req, res) => {
     res.redirect('/listarProd');
 });
 
+
 router.get("/listarProd", (req, res) =>{
 
-    Productos.find({}, (err, productos) =>{
+    Productos.find({}, (err, productos)=>{
         if(err){
             console.error('Ha ocurrido un error');
         }else{
-            res.render('pages/Productos/productsList', {datos: productos});
+            let cooki = req.cookies;
+            res.render('pages/Productos/productsList', {produc: productos, datos: cooki});
         }
     });
 });
+
 
 router.post('/delete/:Referencia', (req, res) =>{
     Productos.deleteOne({Referencia: req.params.Referencia}, (error) =>{
@@ -162,7 +171,7 @@ router.post('/updateProd/:_id', (req, res) => {
    Clientes  */
 
 router.get("/clientesRegistros", (req, res) =>{
-    res.render('pages/Clientes/clientRegister', {rol:false});
+    res.render('pages/Clientes/clientRegister', req.cookies);
 });
 
 router.post("/registerClientes", (req, res) => {
@@ -199,21 +208,6 @@ router.post("/registerClientes", (req, res) => {
     res.redirect('/listarClientes');
 });
 
-router.get("/listarClientesPrueba", (req, res) =>{
-    /* Clientes.find({}, (err, clientes) =>{
-        Usuarios.populate(clientes, { path: "Usuarios"}, (err, clientes) => {
-            res.status(200).send(clientes);
-        });
-    }) */
-    Clientes.find({}).populate('Usuarios').
-    exec((err, clientes) => { 
-        if (err) {
-            console.error(err);
-        }else{
-            console.log(clientes[0].Usuarios);
-        }
-    });
-});
 
 router.get("/listarClientes", (req, res) =>{
 
@@ -221,12 +215,11 @@ router.get("/listarClientes", (req, res) =>{
         if(err){
             console.error('Ha ocurrido un error con los clientes');
         }else{
-            //let usuarios = Usuario.findOne({Cliente: clientes.ObjectId});
-            //console.log("Esto es lo que trajo: ", ObjectId());
-            res.render('pages/Clientes/clientList', {datosC: clientes, datosU:object, rol: false});     
+            let cooki = req.cookies;
+            res.render('pages/Clientes/clientList', {datosC: clientes, datos: cookie});     
         }
     });
-    console.log("Esto es lo que trajo abajo: ", ObjectId());
+    //console.log("Esto es lo que trajo abajo: ", ObjectId());
 });
 
 router.post('/deleteCliente/:_id', (req, res) =>{
@@ -279,13 +272,14 @@ router.get('/listVentas', (req, res) => {
         if(err){
             console.error("Ha ocurrido un error");
         }else{
-            res.render('pages/Ventas/listarVentas', {datosV: ventas});
+            let cooki = req.cookies;
+            res.render('pages/Ventas/listarVentas', {datosV: ventas, datos: cooki});
         }
     });
 });
 
 router.get('/registerVenta', (req, res) => {
-    res.render('pages/Ventas/registerVenta');
+    res.render('pages/Ventas/registerVenta', req.cookies);
 });
 
 router.post('/registrarVenta', (req, res) => {
@@ -350,13 +344,14 @@ router.get("/vendedores", (req, res) =>{
         if(err){
             console.error('Ha ocurrido un error');
         }else{
-            res.render('pages/Vendedores/vendedoresList', {datos: vendedores});
+            let cooki = req.cookies;
+            res.render('pages/Vendedores/vendedoresList', {ven: vendedores, datos: cooki});
         }
     });
 });
 
 router.get("/vendRegistros", (req, res) =>{
-    res.render('pages/Vendedores/vendedoresRegister');
+    res.render('pages/Vendedores/vendedoresRegister', req.cookies);
 });
 
 router.post("/registerVend", (req, res) => {

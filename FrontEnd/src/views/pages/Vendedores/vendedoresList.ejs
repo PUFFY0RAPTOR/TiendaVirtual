@@ -7,7 +7,7 @@
     <title>Listar Vendedores</title>
 </head>
 <body>
-    <%- include('../partials/navbar'); %>
+    <%- include('../../partials/navbar'); %>
 
     <br/><br/><h1 class="pt-5 text-center">Lista de vendedores</h1><br/>
     <hr><br/>
@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% datos.forEach((vend) => { %>
+                <% ven.forEach((vend) => { %>
                     <tr>
                         <td><%= vend.Nombre %></td>
                         <td><%= vend.Documento %></td>

@@ -20,7 +20,6 @@ const schemaUsuario = new mongoose.Schema({
         required:true,
         default:"Cliente"
     }, 
-    
     Cliente: mongoose.ObjectId,
     Empleado: mongoose.ObjectId
 });
